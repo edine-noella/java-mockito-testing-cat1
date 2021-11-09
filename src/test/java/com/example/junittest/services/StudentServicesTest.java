@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -59,6 +60,20 @@ public class StudentServicesTest {
         studentService.updateStudent(st.getId(),newST);
         verify(studentRepository).save(newST);
         verify(studentRepository).findById(st.getId());
+    }
+
+    @Test
+    public void returnStudent(){
+        Student student = new Student();
+        student.setId(2);
+
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+
+        Student expected = studentService.detailStudent(student.getId());
+
+        assertThat(expected).isSameAs(student);
+
+        verify(studentRepository).findById(student.getId());
     }
 
 }

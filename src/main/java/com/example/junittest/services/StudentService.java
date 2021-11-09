@@ -39,4 +39,9 @@ public class StudentService {
         return studentRepository.save(student);
 
     }
+
+    public Student detailStudent(Integer id){
+        return studentRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("Student with id "+id+ " not found!"));
+    }
 }
